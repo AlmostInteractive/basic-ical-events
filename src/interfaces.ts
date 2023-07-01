@@ -5,13 +5,17 @@ export interface CalendarConfig {
   password?: string;
 }
 
+export interface ExDate extends Date {
+  dateOnly: boolean;
+}
+
 export interface CalendarEvent {
-  exdate?: any;
+  eventStart: Date;
+  eventEnd: Date;
+  exdate?: { [id: string]: ExDate };
   recurrences?: any;
   summary?: string | { val: string; params: any };
   location?: string;
-  eventStart?: Date;
-  eventEnd?: Date;
   date?: string;
   event?: string;
   description?: string;
@@ -42,11 +46,11 @@ export interface EventsFilter {
   pastViewWindow?: {
     amount: number;
     units: 'hours' | 'days';
-  }
+  };
   futureViewWindow?: {
     amount: number;
     units: 'hours' | 'days';
-  }
+  };
 }
 
 export interface ViewWindow {
@@ -58,7 +62,7 @@ export interface iCalEvent {
   status?: any;
   completion?: any;
   completed?: any;
-  due?:any;
+  due?: any;
   exdate: any;
   recurrences: any;
   rrule?: any;
