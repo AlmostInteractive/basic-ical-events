@@ -49,6 +49,11 @@ export interface EventsFilter {
   }
 }
 
+export interface ViewWindow {
+  past: Date;
+  future: Date;
+}
+
 export interface iCalEvent {
   status?: any;
   completion?: any;
