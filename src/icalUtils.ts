@@ -155,8 +155,14 @@ const getTimeZone = (value: any) => {
 };
 
 const isDateOnly = (value: string, parameters: string | string[]) => {
-  const dateOnly = ((parameters && parameters.includes('VALUE=DATE') && !parameters.includes('VALUE=DATE-TIME')) || /^\d{8}$/.test(value) === true);
-  return dateOnly;
+  return (
+    (
+      parameters
+      && parameters.includes('VALUE=DATE')
+      && !parameters.includes('VALUE=DATE-TIME')
+    )
+    || /^\d{8}$/.test(value) === true
+  );
 };
 
 const typeParameter = (name: string) => {
@@ -342,16 +348,15 @@ const exdateParameter = (name: string) => {
     curr[name] = curr[name] || [];
     const dates = value ? value.split(separatorPattern) : [];
     for (const entry of dates) {
-      const exdate: never[] = [];
-      dateParameter(name)(entry, parameters, exdate);
+      const exdateHolder: any = {};
+      dateParameter(name)(entry, parameters, exdateHolder);
 
-      if (exdate[name as any]) {
-        //@ts-ignore
-        if (typeof exdate[name as any].toISOString === 'function') {
-          //@ts-ignore
-          curr[name][exdate[name as any].toISOString().slice(0, 10)] = exdate[name as any];
+      if (exdateHolder[name]) {
+        const exdate = exdateHolder[name];
+        if (typeof exdate.toISOString === 'function') {
+          curr[name][exdate.toISOString().slice(0, 10)] = exdate;
         } else {
-          throw new TypeError('No toISOString function in exdate[name]' + exdate[name as any]);
+          throw new TypeError('No toISOString function in exdate[name]' + exdate);
         }
       }
     }
