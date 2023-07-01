@@ -1,0 +1,57 @@
+{
+  "name": "ical-events",
+  "version": "0.1.0",
+  "description": "ical calendar events",
+  "scripts": {
+    "compile": "npm run _build && npm run _tsc-declaration && npm run _copy",
+    "watch": "tsc --watch",
+    "test": "ts-mocha --timeout 10000 --paths test/**/*_test.ts",
+    "coverage": "nyc npm run test",
+    "release": "release-it",
+    "_build": "node ./buildSrc/esbuild.js",
+    "_copy": "cp src/windowsZones.json dist/",
+    "_tsc-declaration": "tsc --declaration --emitDeclarationOnly"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almostineractive/ical-events.git"
+  },
+  "keywords": [
+    "ics",
+    "events",
+    "ical",
+    "calendar",
+    "google"
+  ],
+  "exports": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "author": "AlmostInteractive",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "ical-expander": "^3.1.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "node-cache": "^5.1.2",
+    "rrule": "^2.7.2",
+    "ts-node": "^10.9.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.3.3",
+    "@types/uuid": "^9.0.2",
+    "chai": "^4.3.7",
+    "chai-like": "^1.1.1",
+    "chai-things": "^0.2.0",
+    "esbuild": "^0.18.10",
+    "esbuild-node-externals": "^1.8.0",
+    "mocha": "^10.2.0",
+    "release-it": "^15.11.0",
+    "sinon": "^15.2.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.1.6"
+  }
+}
