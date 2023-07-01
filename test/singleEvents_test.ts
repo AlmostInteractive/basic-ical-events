@@ -19,7 +19,7 @@ describe('oneTime', () => {
       url: ICS_URL,
     });
     const events = await cal.getEvents({
-      now: moment('20111123').toDate(),
+      now: moment('2011-11-23').toDate(),
     });
     expect(events).to.have.lengthOf(13);
   });
@@ -29,7 +29,7 @@ describe('oneTime', () => {
       url: ICS_URL,
     });
     const events = await cal.getEvents({
-      now: moment('20210111').toDate(),
+      now: moment('2021-01-11').toDate(),
       pastViewWindow: {
         amount: 10,
         units: 'days',
@@ -47,7 +47,7 @@ describe('oneTime', () => {
       url: ICS_URL,
     });
     const events = await cal.getEvents({
-      now: moment('20210325').toDate(),
+      now: moment('2021-03-25').toDate(),
       pastViewWindow: {
         amount: 0,
         units: 'days',
