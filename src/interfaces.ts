@@ -1,63 +1,3 @@
-export interface CalendarConfig {
-  url: string;
-  rejectUnauthorized?: boolean;
-  username?: string;
-  password?: string;
-}
-
-export interface ExDate extends Date {
-  dateOnly: boolean;
-}
-
-export interface CalendarEvent {
-  eventStart: Date;
-  eventEnd: Date;
-  exdate?: { [id: string]: ExDate };
-  recurrences?: any;
-  summary?: string | { val: string; params: any };
-  location?: string;
-  date?: string;
-  event?: string;
-  description?: string;
-  id?: string;
-  allDay?: boolean;
-  rrule?: any;
-  rruleText?: string;
-  countdown?: object;
-  calendarName?: string;
-  uid?: { uid: string; date: string };
-  duration?: number;
-  durationSeconds?: number;
-  organizer?: string;
-  isRecurring?: boolean;
-  datetype?: string;
-  attendee?: any;
-  categories?: string[];
-  status?: {
-    percent?: any;
-    completed?: any;
-    date?: any;
-  };
-  originalEvent?: any;
-}
-
-export interface EventsFilter {
-  now?: Date;
-  pastViewWindow?: {
-    amount: number;
-    units: 'hours' | 'days';
-  };
-  futureViewWindow?: {
-    amount: number;
-    units: 'hours' | 'days';
-  };
-}
-
-export interface ViewWindow {
-  past: Date;
-  future: Date;
-}
-
 export interface iCalEvent {
   status?: any;
   completion?: any;
@@ -93,4 +33,67 @@ export interface iCalEvent {
   uid?: string,
   categories?: string[],
   alarms?: any[]
+}
+
+export interface CalendarConfig {
+  url: string;
+  rejectUnauthorized?: boolean;
+  username?: string;
+  password?: string;
+}
+
+export interface ExDate extends Date {
+  dateOnly: boolean;
+}
+
+export interface Recurrance extends iCalEvent {
+  recurrenceid: Date;
+}
+
+export interface CalendarEvent {
+  eventStart: Date;
+  eventEnd: Date;
+  exdate?: { [id: string]: ExDate };
+  recurrences?: { [id: string]: Recurrance };
+  summary?: string | { val: string; params: any };
+  location?: string;
+  date?: string;
+  event?: string;
+  description?: string;
+  id?: string;
+  allDay?: boolean;
+  rrule?: any;
+  rruleText?: string;
+  countdown?: object;
+  calendarName?: string;
+  uid?: { uid: string; date: string };
+  duration?: number;
+  durationSeconds?: number;
+  organizer?: string;
+  isRecurring?: boolean;
+  datetype?: string;
+  attendee?: any;
+  categories?: string[];
+  status?: {
+    percent?: any;
+    completed?: any;
+    date?: any;
+  };
+  originalEvent?: any;
+}
+
+export interface ViewWindow {
+  past: Date;
+  future: Date;
+}
+
+export interface ViewWindowParams {
+  amount: number;
+  units: 'hours' | 'days';
+}
+
+export interface EventsFilter {
+  now?: Date;
+  pastViewWindow?: ViewWindowParams;
+  futureViewWindow?: ViewWindowParams;
 }

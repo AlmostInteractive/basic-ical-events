@@ -90,6 +90,15 @@ export const convertEventData = (event: iCalEvent) => {
   return undefined;
 }
 
+export const formatDate = (start: Date, end: Date): string => {
+  const dateTime: Intl.DateTimeFormat = new Intl.DateTimeFormat();
+  if (end >= start)
+    //@ts-ignore
+    return dateTime.formatRange(start, end);
+  //@ts-ignore
+  return dateTime.formatRange(end, start);
+}
+
 const getStartEndDate = (event: iCalEvent) => {
   const startDate = new Date((!event.type || event.type === 'VEVENT')
     ? (event.startDate?.toJSDate() || moment(getDateVal(event.start)).toDate())
@@ -108,15 +117,6 @@ const getStartEndDate = (event: iCalEvent) => {
 
 const getDateVal = (date: any) => {
   return (date && date.val) ? date.val : date;
-}
-
-const formatDate = (start: Date, end: Date): string => {
-  const dateTime: Intl.DateTimeFormat = new Intl.DateTimeFormat();
-  if (end >= start)
-    //@ts-ignore
-    return dateTime.formatRange(start, end);
-  //@ts-ignore
-  return dateTime.formatRange(end, start);
 }
 
 const isAllDay = (event: any, startDate: Date, endDate: Date): boolean => {

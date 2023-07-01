@@ -531,13 +531,7 @@ const objectHandlers: any = {
           // except for the case that we get the RECURRENCE-ID record before the RRULE record.  In that case, we
           // would end up with a shared reference that would cause us to overwrite *both* records at the point
           // that we try and fix up the parent record.)
-          const recurrenceObject: any = {};
-          let key;
-          for (key in curr) {
-            if (key !== null) {
-              recurrenceObject[key] = curr[key];
-            }
-          }
+          const recurrenceObject = Object.assign({}, curr);
 
           if (typeof recurrenceObject.recurrences !== 'undefined') {
             delete recurrenceObject.recurrences;
