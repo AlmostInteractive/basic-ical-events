@@ -100,8 +100,8 @@ export class icalCalendar {
     return this.getFilteredEvents(Object.assign({}, DEFAULT_FILTER, filter));
   }
 
-  public debugPrint() {
-    const events = this._events.slice();
+  public debugPrint(events?: CalendarEvent[]) {
+    events = events || this._events.slice();
     events.sort((a, b) => a.eventStart < b.eventStart ? -1 : 1);
     events.forEach(event => console.log(event.summary, event.eventStart, event.eventEnd));
   }
