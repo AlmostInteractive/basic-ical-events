@@ -10,7 +10,7 @@ use(require('chai-things'));
 const ICS_URL= './test/mocks/onetime.ics';
 
 describe('oneTime', () => {
-  afterEach(function () {
+  afterEach(() => {
     sinon.restore();
   });
 

@@ -10,7 +10,7 @@ use(require('chai-things'));
 const ICS_URL = './test/mocks/rrule.ics';
 
 describe('rrule', () => {
-  afterEach(function () {
+  afterEach(() => {
     sinon.restore();
   });
 
@@ -21,7 +21,6 @@ describe('rrule', () => {
     const events = await cal.getEvents({
       now: moment('2021-11-23').toDate(),
     });
-    cal.debugPrint();
     expect(events).to.have.lengthOf(28);
   });
 
