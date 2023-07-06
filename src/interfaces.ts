@@ -18,7 +18,7 @@ export interface iCalEvent {
   summary?: any;
   topic?: string;
   location?: string;
-  start?: Date
+  start?: Date;
   end?: Date;
   datetype?: string;
   event?: string;
@@ -31,7 +31,7 @@ export interface iCalEvent {
   calendarName?: string;
   uid?: string;
   categories?: string[];
-  alarms?: any[]
+  alarms?: any[];
 }
 
 export interface CalendarConfig {
