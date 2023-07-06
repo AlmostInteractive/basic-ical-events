@@ -14,7 +14,7 @@ esbuild.build({
   logLevel: "info",
   entryPoints: ['./src/index.ts'],
   outfile: 'dist/index.js',
-  bundle: false,
+  bundle: true,
   minify: false,
   platform: 'node',
   sourcemap: true,
