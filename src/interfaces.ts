@@ -15,23 +15,22 @@ export interface iCalEvent {
   attendees?: any;
   attendee?: any;
   organizer?: string;
-  summary?: any,
-  topic?: string,
-  location?: string,
+  summary?: any;
+  topic?: string;
+  location?: string;
   start?: Date
-  end?: Date,
-  datetype?: string,
-  event?: string,
-  description?: string,
-  id?: string,
-  allDay?: boolean,
-  rule?: string,
-  on?: boolean,
-  off?: boolean,
-  countdown?: object,
-  calendarName?: string,
-  uid?: string,
-  categories?: string[],
+  end?: Date;
+  datetype?: string;
+  event?: string;
+  description?: string;
+  id?: string;
+  allDay?: boolean;
+  rule?: string;
+  on?: boolean;
+  off?: boolean;
+  calendarName?: string;
+  uid?: string;
+  categories?: string[];
   alarms?: any[]
 }
 
@@ -64,7 +63,6 @@ export interface CalendarEvent {
   allDay?: boolean;
   rrule?: any;
   rruleText?: string;
-  countdown?: object;
   calendarName?: string;
   uid?: { uid: string; date: string };
   duration?: number;
