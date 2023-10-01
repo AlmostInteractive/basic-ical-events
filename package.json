@@ -1,6 +1,6 @@
 {
   "name": "basic-ical-events",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "basic ical calendar events",
   "scripts": {
     "compile": "npm run _build && npm run _tsc-declaration",
