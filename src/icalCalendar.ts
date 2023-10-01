@@ -64,28 +64,32 @@ export class icalCalendar {
 
     this._loaded = false;
 
-    this._loadingPromise = new Promise<void>(async (resolve) => {
-      let data;
-      if (this._config.url.match(/^https?:\/\//)) {
-        const options = { headers: {} };
-        const username = this._config.username;
-        const password = this._config.password;
+    this._loadingPromise = new Promise<void>(async (resolve, reject) => {
+      try {
+        let data;
+        if (this._config.url.match(/^https?:\/\//)) {
+          const options = { headers: {} };
+          const username = this._config.username;
+          const password = this._config.password;
 
-        if (username && password) {
-          const auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
-          options.headers = { 'Authorization': auth };
+          if (username && password) {
+            const auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64');
+            options.headers = { 'Authorization': auth };
+          }
+
+          data = await fetchFromURL(this._config.url, options);
+        } else {
+          data = await fetchFromFile(this._config.url);
         }
 
-        data = await fetchFromURL(this._config.url, options);
-      } else {
-        data = await fetchFromFile(this._config.url);
+        this._events = convertRawEventData(data);
+
+        this._loadingPromise = undefined;
+        this._loaded = true;
+        resolve();
+      } catch (error) {
+        reject(error);
       }
-
-      this._events = convertRawEventData(data);
-
-      this._loadingPromise = undefined;
-      this._loaded = true;
-      resolve();
     });
 
     return await this._loadingPromise;
