@@ -753,19 +753,13 @@ const getErrorMessage = (unknownError: unknown) => {
   if (response) {
     const { message } = response.data as any;
     const status = response.status;
-    return {
-      message,
-      status,
-    };
+    return `${status}: ${message}`;
   } else if (request) {
     //request sent but no response received
-    return {
-      message: 'server time out',
-      status: 503,
-    };
+    return `503: server time out`;
   } else {
     // Something happened in setting up the request that triggered an Error
-    return { message: 'oops! something went wrong while setting up request' };
+    return 'oops! something went wrong while setting up request';
   }
 };
 
