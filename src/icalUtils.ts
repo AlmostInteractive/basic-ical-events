@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const { v4: uuid } = require('uuid');
 const rrule = require('rrule').RRule;
@@ -137,8 +137,8 @@ const getTimeZone = (value: any) => {
   if (tz && tz.startsWith('(')) {
     // Extract just the offset
     const regex = /[+|-]\d*:\d*/;
-    tz = null;
     found = tz.match(regex);
+    tz = null;
   }
 
   // Timezone not confirmed yet
@@ -743,8 +743,41 @@ export const parseICS = (string: string) => {
   return parseLines(lines, lines.length);
 };
 
+const getErrorMessage = (unknownError: unknown) => {
+  if (!axios.isAxiosError(unknownError)) {
+    return (unknownError as Error).message;
+  }
+
+  const error = unknownError as AxiosError;
+  const { request, response } = error;
+  if (response) {
+    const { message } = response.data as any;
+    const status = response.status;
+    return {
+      message,
+      status,
+    };
+  } else if (request) {
+    //request sent but no response received
+    return {
+      message: 'server time out',
+      status: 503,
+    };
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    return { message: 'oops! something went wrong while setting up request' };
+  }
+};
+
 export const fetchFromURL = async (url: any, options: any): Promise<any> => {
-  const response = await axios.get(url, options);
+  let response;
+  try {
+    response = await axios.get(url, options);
+  } catch (error) {
+    const message = getErrorMessage(error);
+    throw new Error(`axios.get failed: ${message}`);
+  }
+
   if (Math.floor(response.status / 100) !== 2) {
     throw new Error(`${response.status} ${response.statusText}`);
   }
