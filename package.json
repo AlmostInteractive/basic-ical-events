@@ -3,13 +3,12 @@
   "version": "1.0.2",
   "description": "basic ical calendar events",
   "scripts": {
-    "compile": "npm run _build && npm run _tsc-declaration && npm run _copy",
+    "compile": "npm run _build && npm run _tsc-declaration",
     "watch": "tsc --watch",
     "test": "ts-mocha --timeout 10000 --paths test/**/*_test.ts",
     "coverage": "nyc npm run test",
     "release": "release-it",
     "_build": "node ./buildSrc/esbuild.js",
-    "_copy": "cp src/windowsZones.json dist/",
     "_tsc-declaration": "tsc --declaration --emitDeclarationOnly"
   },
   "repository": {
