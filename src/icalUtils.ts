@@ -745,7 +745,7 @@ export const parseICS = (string: string) => {
 
 const getErrorMessage = (unknownError: unknown) => {
   if (!axios.isAxiosError(unknownError)) {
-    return (unknownError as Error).message;
+    return `Non Axios Error: ${(unknownError as Error).message}`;
   }
 
   const error = unknownError as AxiosError;
