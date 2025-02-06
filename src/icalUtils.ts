@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
-
-const { v4: uuid } = require('uuid');
-const rrule = require('rrule').RRule;
+import { v4 as uuid } from 'uuid';
+import zoneTable from './windowsZones';
 import fs = require('fs');
 import moment = require('moment-timezone');
+const rrule = require('rrule').RRule;
 
 const text = (t = '') => {
   return t
@@ -86,7 +86,7 @@ const addTZ = (dt: any, parameters: any) => {
   if (parameters && p && dt) {
     dt.tz = p.TZID;
     if (dt.tz !== undefined) {
-      // Remove surrouding quotes if found at the begining and at the end of the string
+      // Remove surrounding quotes if found at the beginning and at the end of the string
       // (Occurs when parsing Microsoft Exchange events containing TZID with Windows standard format instead IANA)
       dt.tz = dt.tz.replace(/^"(.*)"$/, '$1');
     }
@@ -95,16 +95,8 @@ const addTZ = (dt: any, parameters: any) => {
   return dt;
 };
 
-let zoneTable: { [x: string]: any; } | null = null;
-
 const getIanaTZFromMS = (msTZName: string | number) => {
-  if (!zoneTable) {
-    const p = require('path');
-    zoneTable = require(p.join(__dirname, 'windowsZones.json'));
-  }
-
   // Get hash entry
-  //@ts-ignore
   const he = zoneTable[msTZName];
   // If found return iana name, else null
   return he ? he.iana[0] : null;
